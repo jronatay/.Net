@@ -1,0 +1,47 @@
+﻿@using Projector.Models;
+@model List<Projector.Models.ProjectAssignmentsViewModel>
+
+
+<div id="sample">
+@using (Ajax.BeginForm("assign", new AjaxOptions
+{
+    HttpMethod = "POST",
+
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "sample",
+    OnSuccess = "success",
+
+}))
+{
+    if (Model.Count <= 0)
+    {
+    <select name="person_id" id="person_id">
+        
+     <option>No Available Person</option>
+        
+    </select>
+    }
+    else
+    {
+     <select name="person_id" id="person_id">
+        @foreach (var person in Model)
+        {
+            <option value="@person.person_id">@person.first_name , @person.last_name</option>
+        }
+    </select>
+<input type="hidden" name="project_id" id="project_id" value="@Session["proj_id"]" />
+
+    <input type="submit" value="Add" id="addButton" />
+
+    }
+}
+</div>
+<script>
+    function success() {
+        $("#projectmembers-wrapper").load('/Projects/getprojectmembers');
+    }
+   
+   
+    
+</script>
+   

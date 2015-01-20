@@ -1,0 +1,13 @@
+﻿@if (HttpContext.Current.Session["user_firstname"] != null)
+{
+    <p>
+        <span>Hello, @Session["user_firstname"].ToString()!</span>
+        @Html.ActionLink("Sign out", "signout", "Persons")
+        
+    </p>
+} else {
+    <ul>
+       
+        <li>@Html.ActionLink("Sign in", "Index", "signin")</li>
+    </ul>
+}

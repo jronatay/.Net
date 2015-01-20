@@ -1,0 +1,40 @@
+﻿@using Projector.Models;
+@model List<Projector.Models.ProjectAssignmentsViewModel>
+<table>
+    <tbody>
+        
+        @foreach (var members in Model)
+        {
+            <tr>
+                <td>@members.first_name @members.last_name </td>
+                <td>
+                    @using (Ajax.BeginForm("unassign",new AjaxOptions
+                    {
+                    HttpMethod = "POST",
+
+                    InsertionMode = InsertionMode.Replace,
+                    UpdateTargetId = "projectmembers-wrapper",
+                    OnSuccess="success",
+         
+                    } ))
+                    {
+                    <input type="hidden" id="person_id" name="person_id" value="@members.person_id" />
+                    <input type="hidden" id="project_id" name="project_id" value="@members.project_id" />
+                    <input type="submit" value="Unassign" />
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+ 
+     function success() {
+         $("#sample").load('/Projects/unassigned');
+     }
+   
+   
+    
+</script>

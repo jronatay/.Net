@@ -1,0 +1,43 @@
+﻿@model Projector.Models.Project
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Project</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.code)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.code)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.remarks)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.remarks)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.budget)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.budget)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
