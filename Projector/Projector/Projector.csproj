@@ -352,7 +352,6 @@
     <Content Include="Views\SignIn\Index.cshtml" />
     <Content Include="Views\Projects\assignments.cshtml" />
     <Content Include="Views\Projects\getprojectmembers.cshtml" />
-    <Content Include="Views\Projects\unassign.cshtml" />
     <Content Include="Views\Projects\unassigned.cshtml" />
   </ItemGroup>
   <ItemGroup>

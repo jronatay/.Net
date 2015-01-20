@@ -6,8 +6,9 @@
 <div class="signin-block">
 <h2 class="headings">Sign In</h2>
 <div class="signin">
-@using (Html.BeginForm())
-{
+@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+{   @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
  <div>
 <div class="editor-label">
  @Html.LabelFor(m => m.UserName)

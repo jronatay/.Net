@@ -3,15 +3,7 @@
 
 
 <div id="sample">
-@using (Ajax.BeginForm("assign", new AjaxOptions
-{
-    HttpMethod = "POST",
-
-    InsertionMode = InsertionMode.Replace,
-    UpdateTargetId = "sample",
-    OnSuccess = "success",
-
-}))
+@using (Html.BeginForm("assign", "Projects", FormMethod.Post, new { id = "sampleform" }))
 {
     if (Model.Count <= 0)
     {
@@ -37,8 +29,36 @@
 }
 </div>
 <script>
+    $("#sampleform").submit(function () {
+        var person_id = $("#person_id").val();
+        var project_id = $("#project_id").val();
+       
+       
+        var json_strng = JSON.stringify({ person_id: person_id, project_id: project_id });
+        
+
+        $.ajax({
+            url: $("#sampleform").attr("action"),
+            type: 'POST',
+            contentType: 'application/json',
+            dataType: 'json',
+           
+            data: json_strng,
+            success: function (result, status) {
+                if (result.Success) {
+                    success();
+                   
+                }
+                else {
+                    $("#msg").html("<span style=\"color: Red\"><strong>Your submit fauiler, Detail message is:" + json2.ErrorMessage + "</strong></span>");
+                }
+            }
+        });
+        return false;
+    });
     function success() {
         $("#projectmembers-wrapper").load('/Projects/getprojectmembers');
+        $("#sample").load('/Projects/unassigned');
     }
    
    

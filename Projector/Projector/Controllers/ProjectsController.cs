@@ -13,22 +13,15 @@ namespace Projector.Controllers
     public class ProjectsController : Controller
     {
         private ProjectorContext db = new ProjectorContext();
-
+        
         //
         // GET: /Projects/
-
+        [Authorize]
         public ActionResult Index()
         {
-            PersonService service = new PersonService(db);
-            if (service.IsLoggedIn())
-            {
-                ProjectService Service = new ProjectService(db);
-                return View(Service.ViewProjects());
-            }
-            else
-            {
-                return RedirectToAction("Index","signin");
-            }
+
+            ProjectService Service = new ProjectService(db);
+            return View(Service.ViewProjects());
         }
 
         //
@@ -46,18 +39,10 @@ namespace Projector.Controllers
 
         //
         // GET: /Projects/Create
-
+           [Authorize]
         public ActionResult Create()
         {
-             PersonService service = new PersonService(db);
-             if (service.IsLoggedIn())
-             {
-                 return View();
-             }
-             else
-             {
-                 return RedirectToAction("Index", "SignIn");
-             }
+            return View();
         }
 
         //
@@ -77,29 +62,18 @@ namespace Projector.Controllers
         }
 
         //GET Assignment
+        [Authorize]
         public ActionResult assignments()
         {
-            PersonService pservice = new PersonService(db);
-            if (pservice.IsLoggedIn())
-            {
             ProjectService service = new ProjectService(db);
             service.ViewProjectDetail((int)HttpContext.Session["proj_id"]);
-             return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "SignIn");
-            }
-               
-
+            return View();
         }
         //Project Assignments post method
         [HttpPost]
         public ActionResult assignments(int id=0)
         {
-            PersonService pservice = new PersonService(db);
-            if (pservice.IsLoggedIn())
-            {
+           
                 ProjectService service = new ProjectService(db);
                 if (id.Equals(0))
                 {
@@ -114,71 +88,43 @@ namespace Projector.Controllers
                     service.ViewProjectDetail(id);
                     return View(service.ViewProjectDetail(id));
                 }
-            }
-            else
-            {
-                return RedirectToAction("Index", "SignIn");
-            }
-            
-      
-          
+  
         }
        //POST METHOD of Assigning of Person 
         [HttpPost]
         [OutputCache(Duration = 0)]
-        public ActionResult assign(AssignProjectInputModel assign)
+        public JsonResult assign(AssignProjectInputModel assign)
         {
             ProjectService service = new ProjectService(db);
             service.AssignProject(assign);
-            ProjectService Service = new ProjectService(db);
-            return PartialView("unassigned", Service.GetUnAssigned());
+            return Json(new { Success = true, Message = "Successfully" });
 
         }
         //get unassigned persons
-        
+        [Authorize]
         public ActionResult unassigned()
         {
-            PersonService pservice = new PersonService(db);
-            if (pservice.IsLoggedIn())
-            {
-                
-                ProjectService Service = new ProjectService(db);
-                return PartialView("unassigned",Service.GetUnAssigned());
-            }
-            else
-            {
-                return RedirectToAction("Index", "SignIn");
-            }
+             ProjectService Service = new ProjectService(db);
+              return PartialView("unassigned",Service.GetUnAssigned());
+           
         }
         //get project members
+        [Authorize]
         public ActionResult getprojectmembers()
         {
-        PersonService pservice = new PersonService(db);
-            if (pservice.IsLoggedIn())
-            {
+        
                 ProjectService Service = new ProjectService(db);
                 return PartialView("getprojectmembers",Service.GetProjectMembers());
-            }
-            else
-            {
-                return RedirectToAction("Index", "SignIn");
-            }
+           
         }
         //unassign Project Input Model 
         [HttpPost]
-        public ActionResult unassign(UnassignProjectInputModel input)
-        {PersonService pservice = new PersonService(db);
-            if (pservice.IsLoggedIn())
-            {
+        public JsonResult unassign(UnassignProjectInputModel input)
+        {
             ProjectService service = new ProjectService(db);
             service.UnassignPerson(input);
-           
-            return PartialView("getprojectmembers", service.GetProjectMembers());
-            }
-            else
-            {
-                return RedirectToAction("Index", "SignIn");
-            }
+
+            return Json(new { Success2 = true });
         }
         //
         // GET: /Projects/Edit/5

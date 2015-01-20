@@ -1,5 +1,6 @@
 ﻿@using Projector.Models;
 @model List<Projector.Models.ProjectAssignmentsViewModel>
+
 <table>
     <tbody>
         
@@ -8,18 +9,10 @@
             <tr>
                 <td>@members.first_name @members.last_name </td>
                 <td>
-                    @using (Ajax.BeginForm("unassign",new AjaxOptions
+                    @using (Html.BeginForm("unassign","Projects",FormMethod.Post,new {id="membersform"}))
                     {
-                    HttpMethod = "POST",
-
-                    InsertionMode = InsertionMode.Replace,
-                    UpdateTargetId = "projectmembers-wrapper",
-                    OnSuccess="success",
-         
-                    } ))
-                    {
-                    <input type="hidden" id="person_id" name="person_id" value="@members.person_id" />
-                    <input type="hidden" id="project_id" name="project_id" value="@members.project_id" />
+                    <input type="hidden" id="person_id2" name="person_id" value="@members.person_id" />
+                    <input type="hidden" id="project_id2" name="project_id" value="@members.project_id" />
                     <input type="submit" value="Unassign" />
                     }
 
@@ -30,9 +23,45 @@
 </table>
 
 <script>
- 
+
+    
+    $('form#membersform').submit(function (e) {
+        e.preventDefault();
+        var form = $(this).closest('form');
+            var person_id = $("#person_id2",form).val();
+            var project_id = $("#project_id2",form).val();
+
+
+            var json_strng2 = JSON.stringify({ person_id: person_id, project_id: project_id });
+
+
+            $.ajax({
+                url: $(form).attr("action"),
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                async: true,
+                data: json_strng2,
+                success: function (result, status) {
+                    if (result.Success2) {
+                        success();
+
+                    }
+                    else {
+                        $("#msg").html("<span style=\"color: Red\"><strong>Your submit fauiler, Detail message is:" + json2.ErrorMessage + "</strong></span>");
+                    }
+                }
+            });
+            return false;
+        });
+    
      function success() {
+         $("#projectmembers-wrapper").load('/Projects/getprojectmembers');
          $("#sample").load('/Projects/unassigned');
+     }
+     function getform() {
+         var form = $(this).closest("#membersform");
+         submit(form);
      }
    
    

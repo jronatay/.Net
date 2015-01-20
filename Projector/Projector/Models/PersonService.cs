@@ -7,7 +7,7 @@ using Projector.Models;
 
 namespace Projector.Models
 {
-    public class PersonService:PersonInterface ,IDisposable
+    public class PersonService:IDisposable
     {
         private ProjectorContext db;
         public PersonService(ProjectorContext db)
@@ -16,39 +16,32 @@ namespace Projector.Models
         }
         public void Save(Projector.Models.Person person)
         {
+            //Save Person to dbase
             db.Persons.Add(person);
             db.SaveChanges();
         }
         public Boolean SignIn(SignInInputModel user)
         {
+            //check if there is such user
             var sql = db.Persons.Where(p => p.username == user.UserName && p.password == user.Password).ToList();
             if (sql.Count > 0)
             {
-                Person p = new Person();
-                foreach (var loggedin in sql)
-                {
-                    p = loggedin;
-                }
-                HttpContext.Current.Session["user_firstname"] = p.first_name;
-                HttpContext.Current.Session["user_id"] = p.id;
+                return true;
             }
             else
             {
                 return false;
             }
-            return true;
-        }
-        public Boolean IsLoggedIn()
-        {
-            if (HttpContext.Current.Session["user"] != null || !HttpContext.Current.Session.IsNewSession) return true; else return false;
-        }
-        public void signout()
-        {
-            HttpContext.Current.Session.Clear();
-            HttpContext.Current.Session.Abandon();
             
-           
         }
+        public Person userLogged(SignInInputModel user)
+        {
+            //Get user logged in profile
+            var sql = db.Persons.Where(p => p.username == user.UserName && p.password == user.Password).First();
+            return sql;
+        }
+        
+        
         private bool disposed = false;
 
         protected virtual void Dispose(bool disposing)

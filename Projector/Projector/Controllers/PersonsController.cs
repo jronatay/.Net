@@ -5,6 +5,11 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
+using DotNetOpenAuth.AspNet;
+using Microsoft.Web.WebPages.OAuth;
+using WebMatrix.WebData;
+using Projector.Filters;
 using Projector.Models;
 using Projector.Models.DAL;
 
@@ -16,8 +21,8 @@ namespace Projector.Controllers
 
         //
         // GET: /Persons/
-      
 
+        [Authorize]
         public ActionResult Index()
         {
             return View(db.Persons.ToList());
@@ -38,30 +43,21 @@ namespace Projector.Controllers
 
         //
         // GET: /Persons/Create
-
+        [Authorize]
         public ActionResult Create()
         {
-            PersonService pservice = new PersonService(db);
-            if (pservice.IsLoggedIn())
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "SignIn");
-            }
-           
+           return View();
+   
         }
 
         //
         // POST: /Persons/Create
 
         [HttpPost]
+        [Authorize]
         public ActionResult Create(Person person)
         {
-            PersonService pservice = new PersonService(db);
-            if (pservice.IsLoggedIn())
-            {
+           
                 if (ModelState.IsValid)
                 {
                     PersonService service = new PersonService(db);
@@ -70,19 +66,14 @@ namespace Projector.Controllers
                 }
 
                 return View(person);
-            }
-            else
-            {
-                return RedirectToAction("Index", "SignIn");
-            }
-           
         }
         //Signout
+        [Authorize]
         public ActionResult signout()
         {
-            PersonService service = new PersonService(db);
-            service.signout();
-            return RedirectToAction("Index", "signin");
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index", "Home");
+           
         }
 
         //

@@ -1,7 +1,7 @@
-﻿@if (HttpContext.Current.Session["user_firstname"] != null)
+﻿@if (Request.IsAuthenticated)
 {
     <p>
-        <span>Hello, @Session["user_firstname"].ToString()!</span>
+        <span>Hello, @Html.Encode(User.Identity.Name) !</span>
         @Html.ActionLink("Sign out", "signout", "Persons")
         
     </p>
