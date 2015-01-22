@@ -20,11 +20,11 @@ namespace Projector.Models
             db.Persons.Add(person);
             db.SaveChanges();
         }
-        public Boolean SignIn(SignInInputModel user)
+        public Boolean SignIn(SignInInputModel signinInput)
         {
             //check if there is such user
-            var sql = db.Persons.Where(p => p.username == user.UserName && p.password == user.Password).ToList();
-            if (sql.Count > 0)
+            var sqlresult = db.Persons.Where(person => person.username == signinInput.UserName && person.password == signinInput.Password).ToList();
+            if (sqlresult.Count > 0)
             {
                 return true;
             }

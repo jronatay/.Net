@@ -18,14 +18,14 @@ namespace Projector.Controllers
     public class PersonsController : Controller
     {
         private ProjectorContext db = new ProjectorContext();
-
+        private PersonService personService = new PersonService(new ProjectorContext());
         //
         // GET: /Persons/
 
         [Authorize]
         public ActionResult Index()
         {
-            return View(db.Persons.ToList());
+         return View(db.Persons.ToList());
         }
 
         //
@@ -57,15 +57,12 @@ namespace Projector.Controllers
         [Authorize]
         public ActionResult Create(Person person)
         {
-           
-                if (ModelState.IsValid)
-                {
-                    PersonService service = new PersonService(db);
-                    service.Save(person);
-                    return RedirectToAction("Index");
-                }
-
-                return View(person);
+           if (ModelState.IsValid)
+            {
+            personService.Save(person);
+            return RedirectToAction("Index");
+            }
+            return View(person);
         }
         //Signout
         [Authorize]

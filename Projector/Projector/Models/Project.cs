@@ -11,30 +11,14 @@ namespace Projector.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class Project
     {
         public int id { get; set; }
-        [Required(ErrorMessage = "Please enter Project Code")]
-        [StringLength(50, ErrorMessage = "Maximum 50 characters exceeded")]
-        [Display(Name = "Code")]
         public string code { get; set; }
-
-        [Required(ErrorMessage = "Please enter Project Name")]
-        [StringLength(50, ErrorMessage = "Maximum 50 characters exceeded")]
-        [Display(Name = "Name")]
         public string name { get; set; }
-
-        [Required(ErrorMessage = "Please enter Project Remarks")]
-        [Display(Name = "Remarks")]
-        
         public string remarks { get; set; }
-        [Required(ErrorMessage = "Please enter Project Budget")]
-        [Display(Name = "Budget")]
-        [RegularExpression(@"^\d+.\d{0,4}$",ErrorMessage="Match input (eg 1000.0002,1000,2000.23)")]
-        [Range(0, 9999999999999999.9999)]
-        [DataType(DataType.Currency)]
         public decimal budget { get; set; }
+        public Nullable<int> parentprojectid { get; set; }
     }
 }

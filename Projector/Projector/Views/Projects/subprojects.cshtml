@@ -1,0 +1,23 @@
+﻿@model List<Projector.Models.SubProjectTree>
+@foreach (var projects in Model.ToList())
+{
+    <li><span>@projects.name</span>
+        @if (projects.tree.Count > 0)
+        {
+            <ul>
+                @foreach (var child in projects.tree)
+                {
+                    <li>@child.name</li>
+                    if (child.tree.Count > 0)
+                    {
+                        <ul>
+                            @Html.Partial("subprojects",child.tree)
+                        </ul>
+                    }
+                }
+            </ul>
+        }
+     
+     
+    </li>
+}

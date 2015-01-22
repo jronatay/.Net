@@ -1,4 +1,4 @@
-﻿// Default code generation is disabled for model 'c:\users\justine\documents\visual studio 2012\Projects\Projector\Projector\Models\Projector.edmx'. 
+﻿// Default code generation is disabled for model 'C:\Users\Justine\documents\visual studio 2012\Projects\projector\Projector\Models\Projector.edmx'. 
 // To enable default code generation, change the value of the 'Code Generation Strategy' designer
 // property to an alternate value. This property is available in the Properties Window when the model is
 // open in the designer.

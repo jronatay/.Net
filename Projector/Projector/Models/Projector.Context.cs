@@ -28,5 +28,7 @@ namespace Projector.Models
         public DbSet<Person> Persons { get; set; }
         public DbSet<ProjectAssignment> ProjectAssignments { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<sysdiagram> sysdiagrams { get; set; }
+        
     }
 }

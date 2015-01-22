@@ -29,39 +29,48 @@
 }
 </div>
 <script>
-    $("#sampleform").submit(function () {
-        var person_id = $("#person_id").val();
-        var project_id = $("#project_id").val();
-       
-       
-        var json_strng = JSON.stringify({ person_id: person_id, project_id: project_id });
-        
+    $("#sampleform").one('submit', function (ev) {
+        ev.preventDefault();
+        $("#sampleform").submit(function () {
 
-        $.ajax({
-            url: $("#sampleform").attr("action"),
-            type: 'POST',
-            contentType: 'application/json',
-            dataType: 'json',
-           
-            data: json_strng,
-            success: function (result, status) {
-                if (result.Success) {
-                    success();
-                   
+
+            var person_id = $("#person_id").val();
+            var project_id = $("#project_id").val();
+
+
+            var json_strng = JSON.stringify({ person_id: person_id, project_id: project_id });
+
+
+            $.ajax({
+                url: $("#sampleform").attr("action"),
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+
+                data: json_strng,
+                success: function (result, status) {
+                    if (result.Success) {
+
+                        success();
+
+                    }
+                    else {
+                        $("#msg").html("<span style=\"color: Red\"><strong>Your submit fauiler, Detail message is:" + json2.ErrorMessage + "</strong></span>");
+                    }
                 }
-                else {
-                    $("#msg").html("<span style=\"color: Red\"><strong>Your submit fauiler, Detail message is:" + json2.ErrorMessage + "</strong></span>");
-                }
-            }
+            });
+            return false;
         });
-        return false;
-    });
-    function success() {
-        $("#projectmembers-wrapper").load('/Projects/getprojectmembers');
-        $("#sample").load('/Projects/unassigned');
-    }
+        $(this).on('submit', function (evt) {
+            evt.preventDefault();
+        });
+
+        function success() {
+            $("#projectmembers-wrapper").load('/Projects/getprojectmembers');
+            $("#sample").load('/Projects/unassigned');
+        }
+
    
-   
-    
+
 </script>
    

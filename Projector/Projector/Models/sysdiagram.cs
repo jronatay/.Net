@@ -12,12 +12,12 @@ namespace Projector.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Person
+    public partial class sysdiagram
     {
-        public int id { get; set; }
-        public string last_name { get; set; }
-        public string first_name { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

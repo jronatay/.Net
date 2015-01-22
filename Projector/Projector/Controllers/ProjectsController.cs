@@ -12,18 +12,17 @@ namespace Projector.Controllers
     
     public class ProjectsController : Controller
     {
-        private ProjectorContext db = new ProjectorContext();
+       private ProjectorContext db = new ProjectorContext();
+        private ProjectService projectService = new ProjectService(new ProjectorContext());
         
         //
         // GET: /Projects/
         [Authorize]
         public ActionResult Index()
         {
-
-            ProjectService Service = new ProjectService(db);
-            return View(Service.ViewProjects());
+            return View(projectService.ProjectList());
         }
-
+       
         //
         // GET: /Projects/Details/5
 
@@ -53,8 +52,7 @@ namespace Projector.Controllers
         {
             if (ModelState.IsValid)
             {
-                ProjectService service = new ProjectService(db);
-                service.CreateProject(project);
+                projectService.CreateProject(project);
                 return RedirectToAction("Index");
             }
 
@@ -65,70 +63,71 @@ namespace Projector.Controllers
         [Authorize]
         public ActionResult assignments()
         {
-            ProjectService service = new ProjectService(db);
-            service.ViewProjectDetail((int)HttpContext.Session["proj_id"]);
+            projectService.ViewProjectDetail((int)HttpContext.Session["proj_id"]);
             return View();
         }
+
+
         //Project Assignments post method
         [HttpPost]
         public ActionResult assignments(int id=0)
         {
-           
-                ProjectService service = new ProjectService(db);
-                if (id.Equals(0))
-                {
-                    service.ViewProjectDetail((int)HttpContext.Session["proj_id"]);
-                    return View(service.ViewProjectDetail((int)HttpContext.Session["proj_id"]));
-                }
-                else
-                {
-
-
-                    service.SaveProjectID(id);
-                    service.ViewProjectDetail(id);
-                    return View(service.ViewProjectDetail(id));
-                }
-  
+           if (id.Equals(0))
+          {
+           return View(projectService.ViewProjectDetail((int)HttpContext.Session["proj_id"]));
+          }
+           else
+          {
+            projectService.SaveProjectID(id);
+            return View(projectService.ViewProjectDetail(id));
+          }
         }
+
        //POST METHOD of Assigning of Person 
         [HttpPost]
         [OutputCache(Duration = 0)]
         public JsonResult assign(AssignProjectInputModel assign)
         {
-            ProjectService service = new ProjectService(db);
-            service.AssignProject(assign);
+            projectService.AssignPersonToProject(assign);
             return Json(new { Success = true, Message = "Successfully" });
-
         }
+
         //get unassigned persons
         [Authorize]
         public ActionResult unassigned()
         {
-             ProjectService Service = new ProjectService(db);
-              return PartialView("unassigned",Service.GetUnAssigned());
-           
+            return PartialView("unassigned", projectService.UnassignedPerson());
         }
+
         //get project members
         [Authorize]
         public ActionResult getprojectmembers()
         {
-        
-                ProjectService Service = new ProjectService(db);
-                return PartialView("getprojectmembers",Service.GetProjectMembers());
-           
+            return PartialView("getprojectmembers", projectService.ProjectMembersList());
         }
+
         //unassign Project Input Model 
         [HttpPost]
         public JsonResult unassign(UnassignProjectInputModel input)
         {
-            ProjectService service = new ProjectService(db);
-            service.UnassignPerson(input);
-
+            projectService.UnassignPerson(input);
             return Json(new { Success2 = true });
         }
-        //
-        // GET: /Projects/Edit/5
+       
 
+        [HttpPost]
+        public ActionResult subproject(int id)
+        {
+            List<SubProjectTree> subprojects = projectService.ParentsSubProjects(id);
+           return View(subprojects);
+        }
+       
+        public ActionResult subprojects()
+        {
+            return PartialView();
+        }
+
+        // GET: /Projects/Edit/5
         public ActionResult Edit(int id = 0)
         {
             Project project = db.Projects.Find(id);

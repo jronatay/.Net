@@ -38,6 +38,6 @@ c:\users\justine\documents\visual studio 2012\Projects\Projector\Projector\bin\D
 c:\users\justine\documents\visual studio 2012\Projects\Projector\Projector\bin\DotNetOpenAuth.OAuth.xml
 c:\users\justine\documents\visual studio 2012\Projects\Projector\Projector\bin\DotNetOpenAuth.OpenId.xml
 c:\users\justine\documents\visual studio 2012\Projects\Projector\Projector\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
-c:\users\justine\documents\visual studio 2012\Projects\Projector\Projector\obj\Debug\Projector.csprojResolveAssemblyReference.cache
 c:\users\justine\documents\visual studio 2012\Projects\Projector\Projector\obj\Debug\Projector.dll
 c:\users\justine\documents\visual studio 2012\Projects\Projector\Projector\obj\Debug\Projector.pdb
+C:\Users\Justine\documents\visual studio 2012\Projects\projector\Projector\obj\Debug\Projector.csprojResolveAssemblyReference.cache

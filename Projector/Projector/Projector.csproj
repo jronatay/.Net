@@ -204,6 +204,10 @@
     </Compile>
     <Compile Include="Models\ProjectService.cs" />
     <Compile Include="Models\SignInInputModel.cs" />
+    <Compile Include="Models\SubProjectTree.cs" />
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>Projector.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UnassignProjectInputModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -289,6 +293,8 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
+    <Content Include="Scripts\jquery.treeview.js" />
+    <Content Include="Scripts\jquery.treeview.sortable.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -353,6 +359,8 @@
     <Content Include="Views\Projects\assignments.cshtml" />
     <Content Include="Views\Projects\getprojectmembers.cshtml" />
     <Content Include="Views\Projects\unassigned.cshtml" />
+    <Content Include="Views\Projects\subprojects.cshtml" />
+    <Content Include="Views\Projects\subproject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -27,7 +27,7 @@
         <th>
             @Html.DisplayNameFor(model => model.budget)
         </th>
-        <th> Tasks</th>
+        <th colspan="2"> Tasks</th>
     </tr>
 
 @foreach (var item in Model) {
@@ -48,6 +48,13 @@
             <form method="POST" action="Projects/assignments">      
                 <input value="@item.id" name="id" type="hidden" />   
                 <input type="submit" value="Assignments" class="link-button" />
+            </form>
+             
+        </td>
+        <td>
+            <form method="POST" action="Projects/subproject">      
+                <input value="@item.id" name="id" type="hidden" />   
+                <input type="submit" value="Details" class="link-button" />
             </form>
              
         </td>

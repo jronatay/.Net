@@ -38,6 +38,7 @@
           <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="remarks" Type="nvarchar(max)" Nullable="false" />
           <Property Name="budget" Type="decimal" Nullable="false" Scale="4" />
+          <Property Name="parentprojectid" Type="int" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -86,6 +87,7 @@
           <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="remarks" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="budget" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Type="Int32" Name="parentprojectid" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -126,6 +128,7 @@
           <EntitySetMapping Name="Projects">
             <EntityTypeMapping TypeName="ProjectorModel.Project">
               <MappingFragment StoreEntitySet="Projects">
+                <ScalarProperty Name="parentprojectid" ColumnName="parentprojectid" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="name" ColumnName="name" />

@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "Project's Subproject List";
+}
+@model List<Projector.Models.SubProjectTree>
+<script src="~/Scripts/jquery.treeview.js"></script>
+<h2>subproject</h2>
+<div id="treeview">
+<ul >
+    @Html.Partial("subprojects", Model)
+</ul>
+</div>
+<script type="text/javascript">
+        $(function() {
+            $("#treeview ul").treeview();
+        });
+    </script>
