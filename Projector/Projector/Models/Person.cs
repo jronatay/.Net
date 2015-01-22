@@ -11,13 +11,36 @@ namespace Projector.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class Person
     {
         public int id { get; set; }
+
+        [Required(ErrorMessage = "Please enter Last Name")]
+        [StringLength(50, ErrorMessage = "Maximum 50 characters exceeded")]
+        [RegularExpression(@"^[a-zA-Z]{2,50}$", ErrorMessage = "Last Name must be 2 to 50 characters")]
+        [Display(Name = "Last Name")]
         public string last_name { get; set; }
+
+        [Required(ErrorMessage = "Please enter First Name")]
+        [StringLength(50, ErrorMessage = "Maximum 50 characters exceeded")]
+        [RegularExpression(@"^[a-zA-Z]{2,50}$", ErrorMessage = "First Name must be 2 to 50 characters")]
+        [Display(Name = "Last Name")]
         public string first_name { get; set; }
+
+        [Required(ErrorMessage = "Please enter User Name")]
+        [StringLength(200, ErrorMessage = "Maximum 200 characters exceeded")]
+        [RegularExpression(@"^[a-zA-Z0-9@_-]{5,200}$", ErrorMessage = "User Name must be 5 to 200 characters")]
+        [Display(Name = "User Name")]
+        [DataType(DataType.EmailAddress,ErrorMessage="User Name must be in email format")]
         public string username { get; set; }
+
+        [Required(ErrorMessage = "Please enter Password")]
+        [StringLength(11, ErrorMessage = "Maximum 11 characters exceeded")]
+        [RegularExpression(@"^\S{7,11}$", ErrorMessage = "Password must be 7 to 11 characters")]
+        [Display(Name = "Password")]
+        [DataType(DataType.Password)]
         public string password { get; set; }
     }
 }

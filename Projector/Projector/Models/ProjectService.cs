@@ -80,11 +80,19 @@ namespace Projector.Models
          public void UnassignPerson(UnassignProjectInputModel input)
          {
              //Unassign Person from a Project
-             var sqlresult = (from p in db.ProjectAssignments where p.person_id == input.person_id && p.project_id == input.project_id select p).First();
-             ProjectAssignment assignedPerson = db.ProjectAssignments.Find(sqlresult.id);
-             db.ProjectAssignments.Remove(assignedPerson);
-             db.SaveChanges();
+             if (IsStillAssigned(input))
+             {
+                 var sqlresult = (from p in db.ProjectAssignments where p.person_id == input.person_id && p.project_id == input.project_id select p).First();
+                 ProjectAssignment assignedPerson = db.ProjectAssignments.Find(sqlresult.id);
+                 db.ProjectAssignments.Remove(assignedPerson);
+                 db.SaveChanges();
+             }
             
+         }
+         public Boolean IsStillAssigned(UnassignProjectInputModel input)
+         {
+             var sqlresult = (from projectassignments in db.ProjectAssignments where projectassignments.person_id == input.person_id && projectassignments.project_id == input.project_id select projectassignments).ToList();
+             if (sqlresult.Count > 0) { return true; } else { return false; }
          }
          public List<SubProjectTree> ParentsSubProjects(int id)
          {
@@ -140,13 +148,29 @@ namespace Projector.Models
          public void AssignPersonToProject(AssignProjectInputModel AssigningPersonInput)
          {
              //Assign a person to a Project
-             ProjectAssignment person = new ProjectAssignment();
-             person.person_id = AssigningPersonInput.person_id;
-             person.project_id = AssigningPersonInput.project_id;
-             db.ProjectAssignments.Add(person);
-             db.SaveChanges();
+             if (!IsPersonAssigned(AssigningPersonInput))
+             {
+                 ProjectAssignment person = new ProjectAssignment();
+                 person.person_id = AssigningPersonInput.person_id;
+                 person.project_id = AssigningPersonInput.project_id;
+                 db.ProjectAssignments.Add(person);
+                 db.SaveChanges();
+             }
+             
+               
+             
          }
 
+         public Boolean IsPersonAssigned(AssignProjectInputModel AssigningPersonInput)
+         {
+             var sqlresult = (from projectassignments in db.ProjectAssignments where projectassignments.person_id == AssigningPersonInput.person_id && projectassignments.project_id == AssigningPersonInput.project_id select projectassignments).ToList();
+             if (sqlresult.Count > 0)
+             {
+                 return true;
+             }
+             else { return false; }
+
+         }
         
 
         //DISPOSABLE INTERFACE

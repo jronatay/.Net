@@ -29,48 +29,39 @@
 }
 </div>
 <script>
-    $("#sampleform").one('submit', function (ev) {
-        ev.preventDefault();
-        $("#sampleform").submit(function () {
+    $("#sampleform").submit(function () {
+        var person_id = $("#person_id").val();
+        var project_id = $("#project_id").val();
 
 
-            var person_id = $("#person_id").val();
-            var project_id = $("#project_id").val();
+        var json_strng = JSON.stringify({ person_id: person_id, project_id: project_id });
 
 
-            var json_strng = JSON.stringify({ person_id: person_id, project_id: project_id });
+        $.ajax({
+            url: $("#sampleform").attr("action"),
+            type: 'POST',
+            contentType: 'application/json',
+            dataType: 'json',
 
+            data: json_strng,
+            success: function (result, status) {
+                if (result.Success) {
+                    success();
 
-            $.ajax({
-                url: $("#sampleform").attr("action"),
-                type: 'POST',
-                contentType: 'application/json',
-                dataType: 'json',
-
-                data: json_strng,
-                success: function (result, status) {
-                    if (result.Success) {
-
-                        success();
-
-                    }
-                    else {
-                        $("#msg").html("<span style=\"color: Red\"><strong>Your submit fauiler, Detail message is:" + json2.ErrorMessage + "</strong></span>");
-                    }
                 }
-            });
-            return false;
+                else {
+                    $("#msg").html("<span style=\"color: Red\"><strong>Your submit fauiler, Detail message is:" + json2.ErrorMessage + "</strong></span>");
+                }
+            }
         });
-        $(this).on('submit', function (evt) {
-            evt.preventDefault();
-        });
+        return false;
+    });
+    function success() {
+        $("#projectmembers-wrapper").load('/Projects/getprojectmembers');
+        $("#sample").load('/Projects/unassigned');
+    }
 
-        function success() {
-            $("#projectmembers-wrapper").load('/Projects/getprojectmembers');
-            $("#sample").load('/Projects/unassigned');
-        }
 
-   
 
 </script>
    

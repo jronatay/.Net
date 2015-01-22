@@ -11,13 +11,35 @@ namespace Projector.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class Project
     {
         public int id { get; set; }
+
+        [Required(ErrorMessage = "Please enter Project Code")]
+        [StringLength(50, ErrorMessage = "Maximum 50 characters exceeded")]
+        [RegularExpression(@"^[a-zA-Z0-9.]{5,50}$", ErrorMessage = "Code must be 5 to 50 characters of combination of numbers,letters,and period")]
+        [Display(Name = "Code")]
         public string code { get; set; }
+
+        [Required(ErrorMessage = "Please enter Project Name")]
+        [StringLength(50, ErrorMessage = "Maximum 50 characters exceeded")]
+        [RegularExpression(@"^[a-zA-Z0-9.]{5,50}$", ErrorMessage = "Name must be 5 to 50 characters of combination of numbers,letters,and (.) ")]
+        [Display(Name = "Name")]
         public string name { get; set; }
+
+        [Required(ErrorMessage = "Please enter Project Remarks")]
+
+        [RegularExpression(@"^[a-zA-Z0-9., \S]{5,}$", ErrorMessage = "Code must be 5 or more combinations of numbers,letters,and (, .)")]
+        [Display(Name = "Remarks")]
         public string remarks { get; set; }
+
+        [Required(ErrorMessage = "Please enter Project Budget")]
+        [Display(Name = "Budget")]
+        [RegularExpression(@"^\d+.\d{0,4}$", ErrorMessage = "Match input (eg 1000.0002,1000,2000.23)")]
+        [Range(0, 9999999999999999.9999)]
+        [DataType(DataType.Currency)]
         public decimal budget { get; set; }
         public Nullable<int> parentprojectid { get; set; }
     }
