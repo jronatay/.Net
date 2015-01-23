@@ -29,39 +29,44 @@
 }
 </div>
 <script>
-    $("#sampleform").submit(function () {
+    $("#sampleform").submit(function (e) {
+        e.preventDefault();
+        var form = $(this).closest('form');
         var person_id = $("#person_id").val();
         var project_id = $("#project_id").val();
 
 
         var json_strng = JSON.stringify({ person_id: person_id, project_id: project_id });
-
-
+        $.ajaxSetup({ cache: false });
+        
         $.ajax({
-            url: $("#sampleform").attr("action"),
+            url: form.attr('action'),
             type: 'POST',
-            contentType: 'application/json',
+            cache: false,
+            contentType: "application/json; charset=utf-8",
             dataType: 'json',
-
             data: json_strng,
-            success: function (result, status) {
-                if (result.Success) {
-                    success();
+            success: function(responseText,Status,xhr) {
+                if (responseText.success == false) {
+                    alert(responseText.message);
+                    $.get("/Projects/getprojectmembers", function (data) {
+                        $("#projectmembers-wrapper").html(data);
+                    });
+                    $.get("/Projects/unassigned", function (data) {
+                        $("#sample").html(data);
+                    });
+                }
+                console.log(responseText.Status);
+               
+               
 
-                }
-                else {
-                    $("#msg").html("<span style=\"color: Red\"><strong>Your submit fauiler, Detail message is:" + json2.ErrorMessage + "</strong></span>");
-                }
+
             }
         });
-        return false;
+      
+
     });
-    function success() {
-        $("#projectmembers-wrapper").load('/Projects/getprojectmembers');
-        $("#sample").load('/Projects/unassigned');
-    }
-
-
+  
 
 </script>
    

@@ -63,8 +63,8 @@ namespace Projector.Controllers
         [Authorize]
         public ActionResult assignments()
         {
-            projectService.ViewProjectDetail((int)HttpContext.Session["proj_id"]);
-            return View();
+            
+            return View(projectService.ViewProjectDetail((int)HttpContext.Session["proj_id"]));
         }
 
 
@@ -89,7 +89,9 @@ namespace Projector.Controllers
         public JsonResult assign(AssignProjectInputModel assign)
         {
             projectService.AssignPersonToProject(assign);
-            return Json(new { Success = true, Message = "Successfully" });
+            return Json(new { success = false, message = "Success" });
+
+            
         }
 
         //get unassigned persons
@@ -111,7 +113,7 @@ namespace Projector.Controllers
         public JsonResult unassign(UnassignProjectInputModel input)
         {
             projectService.UnassignPerson(input);
-            return Json(new { Success2 = true });
+            return Json(new { success = false, message = "Success" });
         }
        
 

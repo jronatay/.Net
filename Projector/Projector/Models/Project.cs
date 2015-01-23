@@ -12,6 +12,7 @@ namespace Projector.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
     
     public partial class Project
     {
@@ -30,7 +31,7 @@ namespace Projector.Models
         public string name { get; set; }
 
         [Required(ErrorMessage = "Please enter Project Remarks")]
-
+        [AllowHtml]
         [RegularExpression(@"^[a-zA-Z0-9., \S]{5,}$", ErrorMessage = "Code must be 5 or more combinations of numbers,letters,and (, .)")]
         [Display(Name = "Remarks")]
         public string remarks { get; set; }
@@ -39,7 +40,7 @@ namespace Projector.Models
         [Display(Name = "Budget")]
         [RegularExpression(@"^\d+.\d{0,4}$", ErrorMessage = "Match input (eg 1000.0002,1000,2000.23)")]
         [Range(0, 9999999999999999.9999)]
-        [DataType(DataType.Currency)]
+        
         public decimal budget { get; set; }
         public Nullable<int> parentprojectid { get; set; }
     }

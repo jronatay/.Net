@@ -3,8 +3,11 @@
 @{
     ViewBag.Title = "assignments";
 }
-<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
-<script src="~/Scripts/jquery-2.1.3.js"></script>
+
+<script src="~/Scripts/jquery-1.9.1.min.js"></script>
+<script src="~/Scripts/json2.js"></script>
+
+
 <h2>Assignments</h2>
 <h3>Project  - @Model.name </h3>
 <div class="unassign-person" id="unassign-person">
@@ -19,8 +22,24 @@
 </div>    
   <script> 
       $(function () {
-          $("#unassign-person").load('/Projects/unassigned');
-          $("#projectmembers-wrapper").load('/Projects/getprojectmembers');
+          
+           $.get("/Projects/unassigned", function (data) {
+              $("#unassign-person").html(data);
+          });
+          $.get("/Projects/getprojectmembers", function (data) {
+              $("#projectmembers-wrapper").html(data);
+          });
+
+
+          /*----------------------*/
+        
+          /*---------------------*/
+
+
+
+
+
+
       });
 </script>  
 

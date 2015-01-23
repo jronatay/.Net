@@ -12,6 +12,16 @@
 </div>
 <script type="text/javascript">
         $(function() {
-            $("#treeview ul").treeview();
+            
+            $('#subproject ul').hide();
+
+            $('#subprojectli').click(function () {
+                $(this).parent().find('ul').slideToggle();
+            });
+
+           
         });
+        function showchild(parentul) {
+
+        }
     </script>
