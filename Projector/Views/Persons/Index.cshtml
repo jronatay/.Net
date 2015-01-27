@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Projector.Models.Person>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="float-left">
+<h2 class="headings">Other Task</h2>
+
+<ul class="other-task">
+    <li>@Html.ActionLink("Create Project", "Create","Projects")</li>
+    <li>@Html.ActionLink("Create Person", "Create")</li>
+</ul>
+</div>
+<div class="float-right">
+<table class="proj-list">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.last_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.first_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.username)
+        </th>
+        <th>
+
+        </th>
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.last_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.first_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.username)
+        </td>
+        <td>
+          
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+           
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>
+    </div>

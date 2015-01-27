@@ -1,0 +1,45 @@
+﻿@using Projector.Models
+@model Projector.Models.Project
+@{
+    ViewBag.Title = "assignments";
+}
+
+
+<script src="~/Scripts/json2.js"></script>
+
+
+<h2>Assignments</h2>
+<h3>Project  - @Model.name </h3>
+<div class="unassign-person" id="unassign-person">
+   
+</div>
+<div class="Proj">
+
+<h3>Project Members</h3>
+<div class="projectmembers-wrapper" id="projectmembers-wrapper">
+    
+</div>
+</div>    
+  <script> 
+      $(function () {
+          
+           $.get("/Projects/unassigned", function (data) {
+              $("#unassign-person").html(data);
+          });
+          $.get("/Projects/getprojectmembers", function (data) {
+              $("#projectmembers-wrapper").html(data);
+          });
+
+
+          /*----------------------*/
+        
+          /*---------------------*/
+
+
+
+
+
+
+      });
+</script>  
+

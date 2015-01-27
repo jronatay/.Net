@@ -1,0 +1,69 @@
+﻿@using Projector.Models;
+@model List<Projector.Models.ProjectAssignmentsViewModel>
+
+<table>
+    <tbody>
+        
+        @foreach (var members in Model)
+        {
+            <tr>
+                <td>@members.first_name @members.last_name </td>
+                <td>
+                    @using (Html.BeginForm("unassign","Projects",FormMethod.Post,new {id="membersform"}))
+                    {
+                    <input type="hidden" id="person_id2" name="person_id" value="@members.person_id" />
+                    <input type="hidden" id="project_id2" name="project_id" value="@members.project_id" />
+                    <input type="submit" value="Unassign" />
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+
+    
+    $('#membersform').submit(function (e) {
+        e.preventDefault();
+        var form = $(this).closest('form');
+            var person_id = $("#person_id2",form).val();
+            var project_id = $("#project_id2",form).val();
+
+
+            var json_strng2 = JSON.stringify({ person_id: person_id, project_id: project_id });
+
+
+            $.ajax({
+                url:form.attr("action"),
+                type: 'POST',
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                data: json_strng2,
+                success: function (responseText, status) {
+                    if (responseText.success == false) {
+                        alert(responseText.message);
+                        $.get("/Projects/getprojectmembers", function (data) {
+                            $("#projectmembers-wrapper").html(data);
+                        });
+                        $.get("/Projects/unassigned", function (data) {
+                            $("#sample").html(data);
+                        });
+                    }
+                   
+                }
+            });
+            return false;
+        });
+    
+     function success() {
+         $("#projectmembers-wrapper").load('/Projects/getprojectmembers');
+         $("#sample").load('/Projects/unassigned');
+     }
+    
+   
+   
+    
+</script>
