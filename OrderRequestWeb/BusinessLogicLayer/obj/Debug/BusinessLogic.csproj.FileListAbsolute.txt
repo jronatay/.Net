@@ -1,0 +1,10 @@
+c:\users\justine\documents\visual studio 2012\Projects\OrderRequestWeb\BusinessLogicLayer\bin\Debug\BusinessLogicLayer.dll.config
+c:\users\justine\documents\visual studio 2012\Projects\OrderRequestWeb\BusinessLogicLayer\bin\Debug\BusinessLogicLayer.dll
+c:\users\justine\documents\visual studio 2012\Projects\OrderRequestWeb\BusinessLogicLayer\bin\Debug\BusinessLogicLayer.pdb
+c:\users\justine\documents\visual studio 2012\Projects\OrderRequestWeb\BusinessLogicLayer\bin\Debug\EntityFramework.dll
+c:\users\justine\documents\visual studio 2012\Projects\OrderRequestWeb\BusinessLogicLayer\bin\Debug\EntityFramework.xml
+c:\users\justine\documents\visual studio 2012\Projects\OrderRequestWeb\BusinessLogicLayer\obj\Debug\BusinessLogicLayer.dll
+c:\users\justine\documents\visual studio 2012\Projects\OrderRequestWeb\BusinessLogicLayer\obj\Debug\BusinessLogicLayer.pdb
+c:\users\justine\documents\visual studio 2012\Projects\OrderRequestWeb\BusinessLogicLayer\bin\Debug\EntityLibrary.dll
+c:\users\justine\documents\visual studio 2012\Projects\OrderRequestWeb\BusinessLogicLayer\bin\Debug\EntityLibrary.pdb
+c:\users\justine\documents\visual studio 2012\Projects\OrderRequestWeb\BusinessLogicLayer\obj\Debug\BusinessLogic.csprojResolveAssemblyReference.cache

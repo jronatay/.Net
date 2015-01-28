@@ -1,0 +1,8 @@
+c:\users\justine\documents\visual studio 2012\Projects\OrderRequestWeb\DAL\bin\Debug\DAL.dll
+c:\users\justine\documents\visual studio 2012\Projects\OrderRequestWeb\DAL\bin\Debug\DAL.pdb
+c:\users\justine\documents\visual studio 2012\Projects\OrderRequestWeb\DAL\obj\Debug\DAL.dll
+c:\users\justine\documents\visual studio 2012\Projects\OrderRequestWeb\DAL\obj\Debug\DAL.pdb
+c:\users\justine\documents\visual studio 2012\Projects\OrderRequestWeb\DAL\bin\Debug\DAL.dll.config
+c:\users\justine\documents\visual studio 2012\Projects\OrderRequestWeb\DAL\bin\Debug\EntityFramework.dll
+c:\users\justine\documents\visual studio 2012\Projects\OrderRequestWeb\DAL\bin\Debug\EntityFramework.xml
+c:\users\justine\documents\visual studio 2012\Projects\OrderRequestWeb\DAL\obj\Debug\EntityLibrary.csprojResolveAssemblyReference.cache
