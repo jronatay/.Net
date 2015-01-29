@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{759C0223-94E6-4A4E-A679-6792D5B7E4AF}</ProjectGuid>
+    <ProjectGuid>{EAE89BE5-E353-4F71-935C-0D37C9146E28}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EntityLibrary</RootNamespace>
@@ -50,15 +50,19 @@
       <DependentUpon>OrderRequest.tt</DependentUpon>
     </Compile>
     <Compile Include="CustomerRepository.cs" />
+    <Compile Include="CustomerModels\SignInInputModel.cs" />
     <Compile Include="Order.cs">
       <DependentUpon>OrderRequest.tt</DependentUpon>
     </Compile>
     <Compile Include="OrderItem.cs">
       <DependentUpon>OrderRequest.tt</DependentUpon>
     </Compile>
+    <Compile Include="OrderModels\OrderProductsInputModel.cs" />
+    <Compile Include="OrderModels\OrderRequestInputModel.cs" />
     <Compile Include="OrderProduct.cs">
       <DependentUpon>OrderRequest.tt</DependentUpon>
     </Compile>
+    <Compile Include="OrderRepository.cs" />
     <Compile Include="OrderRequest.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

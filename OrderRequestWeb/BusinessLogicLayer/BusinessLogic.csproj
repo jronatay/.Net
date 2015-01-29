@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomerService.cs" />
+    <Compile Include="OrderService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -58,7 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EntityLibrary\EntityLibrary.csproj">
-      <Project>{759c0223-94e6-4a4e-a679-6792d5b7e4af}</Project>
+      <Project>{eae89be5-e353-4f71-935c-0d37c9146e28}</Project>
       <Name>EntityLibrary</Name>
     </ProjectReference>
   </ItemGroup>

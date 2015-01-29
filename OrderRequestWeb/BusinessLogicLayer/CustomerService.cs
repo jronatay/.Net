@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EntityLibrary;
+using EntityLibrary.CustomerModels;
+using System.Web;
+
 
 
 
@@ -11,7 +14,8 @@ namespace BusinessLogicLayer
 {
     public class CustomerService
     {
-        private EntityLibrary.CustomerRepository CustomerRepository = new CustomerRepository();
+        
+        private EntityLibrary.CustomerRepository CustomerRepository = new CustomerRepository(new OrderRequestEntities());
         public void Save(Customer customer)
         {
             if (IsCustomerDataValid(customer)) { SetCustomerRegistrationDate(customer); CustomerRepository.Save(customer); }
@@ -20,7 +24,7 @@ namespace BusinessLogicLayer
         {
             customer.RegistrationDate = DateTime.Now.ToUniversalTime();
         }
-        public Boolean IsNull(EntityLibrary.Customer customer)
+        public Boolean IsNull(Customer customer)
         {
             if (customer.FirstName.Equals(null) && customer.FirstName.Equals(" ") &&
                 customer.LastName.Equals(null) && customer.LastName.Equals(" ") &&
@@ -37,6 +41,7 @@ namespace BusinessLogicLayer
         }
         public Boolean IsLengthRight(Customer customer)
         {
+           
             int FirstNameLength = customer.FirstName.Count();
             int LastNameLength = customer.LastName.Count();
             int Address1Length = customer.Address1.Count();
@@ -60,15 +65,24 @@ namespace BusinessLogicLayer
         }
         public Boolean IsCustomerDataValid(Customer customer)
         {
-            if (!IsNull(customer) && IsLengthRight(customer)) return true; else return false;
+            if (!IsNull(customer) && IsLengthRight(customer) && !IsEmailExixt(customer.EmailAddress)) return true; else return false;
         }
 
         public Boolean IsEmailExixt(string EmailAddress)
         {
             return CustomerRepository.IsEmailExist(EmailAddress);
         }
+        public Boolean IsCustomerSignInExist(SignInInputModel CustomerSignInInput)
+        {
+            return CustomerRepository.IsCustomerSignInExist(CustomerSignInInput);
+        }
+        public string LoggedInUser(SignInInputModel CustomerSignInInput)
+        {
+            Customer customer = CustomerRepository.CustomerLoggingIn(CustomerSignInInput);
+            return customer.FirstName;
+        }
 
-
+       
        
     }
     

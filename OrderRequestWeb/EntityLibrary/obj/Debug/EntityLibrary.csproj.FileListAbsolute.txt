@@ -1,7 +1,8 @@
-c:\users\justine\documents\visual studio 2012\Projects\OrderRequestWeb\EntityLibrary\bin\Debug\EntityLibrary.dll.config
-c:\users\justine\documents\visual studio 2012\Projects\OrderRequestWeb\EntityLibrary\bin\Debug\EntityLibrary.dll
-c:\users\justine\documents\visual studio 2012\Projects\OrderRequestWeb\EntityLibrary\bin\Debug\EntityLibrary.pdb
-c:\users\justine\documents\visual studio 2012\Projects\OrderRequestWeb\EntityLibrary\bin\Debug\EntityFramework.dll
-c:\users\justine\documents\visual studio 2012\Projects\OrderRequestWeb\EntityLibrary\bin\Debug\EntityFramework.xml
-c:\users\justine\documents\visual studio 2012\Projects\OrderRequestWeb\EntityLibrary\obj\Debug\EntityLibrary.dll
-c:\users\justine\documents\visual studio 2012\Projects\OrderRequestWeb\EntityLibrary\obj\Debug\EntityLibrary.pdb
+C:\Users\Justine\Documents\Visual Studio 2012\Projects\OrderRequestWeb\EntityLibrary\bin\Debug\EntityLibrary.dll.config
+C:\Users\Justine\Documents\Visual Studio 2012\Projects\OrderRequestWeb\EntityLibrary\bin\Debug\EntityLibrary.dll
+C:\Users\Justine\Documents\Visual Studio 2012\Projects\OrderRequestWeb\EntityLibrary\bin\Debug\EntityLibrary.pdb
+C:\Users\Justine\Documents\Visual Studio 2012\Projects\OrderRequestWeb\EntityLibrary\bin\Debug\EntityFramework.dll
+C:\Users\Justine\Documents\Visual Studio 2012\Projects\OrderRequestWeb\EntityLibrary\bin\Debug\EntityFramework.xml
+C:\Users\Justine\Documents\Visual Studio 2012\Projects\OrderRequestWeb\EntityLibrary\obj\Debug\EntityLibrary.dll
+C:\Users\Justine\Documents\Visual Studio 2012\Projects\OrderRequestWeb\EntityLibrary\obj\Debug\EntityLibrary.pdb
+C:\Users\Justine\Documents\Visual Studio 2012\Projects\OrderRequestWeb\EntityLibrary\obj\Debug\EntityLibrary.csprojResolveAssemblyReference.cache

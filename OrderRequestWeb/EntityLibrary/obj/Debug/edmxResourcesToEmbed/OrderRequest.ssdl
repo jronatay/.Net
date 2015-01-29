@@ -30,7 +30,7 @@
     <Property Name="ZipCode" Type="nvarchar" Nullable="false" MaxLength="20" />
     <Property Name="City" Type="nvarchar" Nullable="false" MaxLength="50" />
     <Property Name="Region" Type="nvarchar" MaxLength="50" />
-    <Property Name="Country" Type="nvarchar" Nullable="false" MaxLength="25" />
+    <Property Name="Country" Type="nvarchar" Nullable="false" MaxLength="50" />
     <Property Name="EmailAddress" Type="nvarchar" Nullable="false" MaxLength="50" />
     <Property Name="RegistrationDate" Type="datetime" Nullable="false" />
     <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="20" />
