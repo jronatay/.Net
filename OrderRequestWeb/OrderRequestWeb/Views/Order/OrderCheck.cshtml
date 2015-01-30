@@ -7,9 +7,7 @@
 <h2>OrderCheck</h2>
 
 
-@using (Html.BeginForm("Index", "Order", FormMethod.Post))
-{
-    @Html.ValidationSummary(true)
+
     <table>
     <tr>
         <th>
@@ -36,13 +34,12 @@
         <td>
             @Html.DisplayFor(modelItem => item.Description)
         </td>
-            <input type="hidden" name="Id" value="@item.Id" />
-            <input type="hidden" name="ProductName" value="@item.ProductName" />
-            <input type="hidden" name="Description" value="@item.Description" />
-            <input type="hidden" step="1" name="Quantity" value="@item.Quantity" />
+           
     </tr>
     }
+        @using (Html.BeginForm("OrderConfirmation", "Order"))
+        {
+        
         <tr><td><input type="submit" value="Confirm Order" /></td></tr>
-
+        }
     </table>
-}

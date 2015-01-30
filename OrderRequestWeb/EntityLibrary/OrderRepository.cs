@@ -9,14 +9,22 @@ namespace EntityLibrary
 {
     public class OrderRepository
     {
-         private OrderRequestEntities db;
+        private OrderRequestEntities db;
+        private OrderProduct OrderProduct;
+        private Order Order;
+        private OrderItem OrderItem;
          public OrderRepository(OrderRequestEntities db)
         {
             this.db = db;
+            this.OrderProduct = new OrderProduct();
         }
         public List<OrderProduct> OrderProductList()
         {
             return db.OrderProducts.ToList();
+        }
+        public List<OrderModels.OrderProductsInputModel> OrderProductInputList()
+        {
+            return PopulateOrderProductInputModel(OrderProductList());
         }
         public List<OrderModels.OrderProductsInputModel> PopulateOrderProductInputModel(List<OrderProduct> OrderProducts)
         {
@@ -51,54 +59,60 @@ namespace EntityLibrary
             return OrderProductsModel;
             
         }
-        public List<OrderModels.OrderProductsInputModel> OrderProductInputList()
+
+        #region Add Order to Database 
+
+        public int AddOrderRequestAndReturnGeneratedID(int CustomerId)
         {
-            return PopulateOrderProductInputModel(OrderProductList());
+           
+            Order = new Order();
+            Order.CreationDate = DateTime.Now.ToUniversalTime();
+            Order.CustomerId = CustomerId;
+            db.Orders.Add(Order);
+            db.SaveChanges();
+            return Order.Id;
+
         }
 
+        
+
+        public int AddOtherProductAndReturnGeneratedID(OrderModels.OrderProductsInputModel OtherRequestProduct)
+        {
+            OrderProduct = new OrderProduct();
+            AddOtherProduct(OtherRequestProduct);
+            return OrderProduct.Id;
+        }
+        public void AddOtherProduct(OrderModels.OrderProductsInputModel OtherRequestProduct)
+        {
+            OrderProduct = new OrderProduct();
+            OrderProduct = PopulateOrderProductByRequestProduct(OtherRequestProduct);
+            db.OrderProducts.Add(OrderProduct);
+            db.SaveChanges();
+        }
+
+        public OrderProduct PopulateOrderProductByRequestProduct(OrderModels.OrderProductsInputModel OtherRequestProduct)
+        {
+            OrderProduct = new OrderProduct();
+            OrderProduct.ProductName = OtherRequestProduct.ProductName;
+            OrderProduct.Description = OtherRequestProduct.Description;
+            return OrderProduct;
+        }
+
+        public void AddOrderItems(OrderItem OrderItems)
+        {
+            OrderItems = new OrderItem();
+            db.OrderItems.Add(OrderItems);
+            db.SaveChanges();
+        }
+        public Order OrderConfirmation(int OrderNo)
+        {
+            var result = db.Orders.Where(Order => Order.Id == OrderNo).First();
+            return result;
+        }
+
+        #endregion
 
 
-
-        public List<OrderModels.OrderProductsInputModel> PopulateOrderProductsModel(List<OrderModels.OrderProductsInputModel> OrderProductsInputModel)
-        {
-            List<OrderModels.OrderProductsInputModel> TemporaryOrderRequest = new List<OrderModels.OrderProductsInputModel>();
-            foreach (var OrderProductInput in OrderProductsInputModel)
-            {
-                OrderModels.OrderProductsInputModel OrderProducts = new OrderModels.OrderProductsInputModel();
-                OrderProducts.Id = OrderProductInput.Id;
-                OrderProducts.ProductName = OrderProductInput.ProductName;
-                OrderProducts.Description = OrderProductInput.Description;
-                OrderProducts.Quantity = OrderProductInput.Quantity;
-                TemporaryOrderRequest.Add(OrderProducts);
-            }
-            return TemporaryOrderRequest;
-        }
-       
-         public OrderModels.OrderProductsInputModel PopulateTemporaryStorage(OrderModels.OrderProductsInputModel OrderProductsRequestedInput)
-        {
-            OrderModels.OrderProductsInputModel OrderProductsInput =  new OrderModels.OrderProductsInputModel();
-            OrderProductsInput.Id = OrderProductsRequestedInput.Id;
-            OrderProductsInput.ProductName = OrderProductsRequestedInput.ProductName;
-            OrderProductsInput.Description = OrderProductsRequestedInput.Description;
-            OrderProductsInput.Quantity = OrderProductsRequestedInput.Quantity;
-            return OrderProductsInput;
-        }
-         public List<OrderModels.OrderProductsInputModel> StoreProductsOnTemporaryStorage(List<OrderModels.OrderProductsInputModel> OrderProductsRequestedInput)
-         {
-             List<OrderModels.OrderProductsInputModel> OrderProductsTemporaryStorage = new List<OrderModels.OrderProductsInputModel>();
-             foreach (var Item in OrderProductsRequestedInput)
-             {
-                 if (Item.Quantity > 0)
-                 {
-                     OrderProductsTemporaryStorage.Add(PopulateTemporaryStorage(Item));
-                 }
-             }
-             return OrderProductsTemporaryStorage;
-         }
-        public List<OrderModels.OrderProductsInputModel> TemporaryStoredOrderProducts(List<OrderModels.OrderProductsInputModel> StoredOrderProducts)
-        {
-            return StoreProductsOnTemporaryStorage(StoredOrderProducts);
-        }
 
     }
 }

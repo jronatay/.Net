@@ -46,6 +46,13 @@ namespace OrderRequestWeb.Controllers
             
             return View( OrderService.ReturnOrderProductsStored(OrderService.PopulatedOrderProductFromRequest((EntityLibrary.OrderModels.OrderRequestInputModel)Session["model"])));
         }
+        public ActionResult OrderConfirmation()
+        {
+            int OrderNo=OrderService.NewOrder(int.Parse(User.Identity.Name.Split(',')[1]));
+            OrderService.SaveOrder((EntityLibrary.OrderModels.OrderRequestInputModel)Session["model"], OrderNo);
+
+            return View(OrderService.OrderConfirmation(OrderNo));
+        }
 
     }
 }

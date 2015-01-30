@@ -37,8 +37,10 @@ namespace OrderRequestWeb.Controllers
          {
             if (ModelState.IsValid && CustomerService.IsCustomerSignInExist(user))
              {
-                
+               
+               
                  FormsAuthentication.SetAuthCookie(CustomerService.LoggedInUser(user), false);
+
                  return RedirectToAction("Index", "Order");
 
              }

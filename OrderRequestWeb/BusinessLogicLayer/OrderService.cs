@@ -11,11 +11,14 @@ namespace BusinessLogicLayer
     public class OrderService
     {
         private EntityLibrary.OrderRepository OrderRepository = new OrderRepository(new OrderRequestEntities());
-
+        private List<EntityLibrary.OrderModels.OrderProductsInputModel> OrderInput;
+        private EntityLibrary.Order Order;
+        private EntityLibrary.OrderItem OrderItem;
         public IEnumerable<OrderProduct> OrderProductList()
         {
             return OrderRepository.OrderProductList();
         }
+
         public List<EntityLibrary.OrderModels.OrderProductsInputModel> OrderProductInputList()
         {
             return OrderRepository.OrderProductInputList();
@@ -106,8 +109,76 @@ namespace BusinessLogicLayer
             }
             return null;
         }
+
+        public Boolean IsConfirmedOrderRequestNull(EntityLibrary.OrderModels.OrderRequestInputModel ConfirmedOrderRequest)
+        {
+            return ConfirmedOrderRequest == null;
+        }
+
        
-        
-       
+        public Boolean IsOrderCreatedInDatabase()
+        {
+            return true;
+        }
+        public Order PopulateOrder(int CustomerID)
+        {
+            Order = new Order();
+            Order.CreationDate = DateTime.Now.ToUniversalTime();
+            Order.CustomerId = CustomerID;
+            return Order;
+        }
+        public int NewOrder(int CustomerID)
+        {
+           
+            int OrderNo = OrderRepository.AddOrderRequestAndReturnGeneratedID(CustomerID);
+            return OrderNo;
+        }
+        #region OrderItems
+        public void SaveOrder(EntityLibrary.OrderModels.OrderRequestInputModel ConfirmedOrderRequest,int OrderNo)
+        {
+           
+            OrderInput = new List<EntityLibrary.OrderModels.OrderProductsInputModel>();
+            OrderInput = PopulatedOrderProductFromRequest(ConfirmedOrderRequest);
+            foreach (var Product in OrderInput)
+            {
+                if (IsConfirmedOrderProductOthers(Product.Id))
+                {
+                    int OrderProductID =OrderRepository.AddOtherProductAndReturnGeneratedID(Product);
+                    OrderRepository.AddOrderItems(AddOrderItemsOtherProducts(Product, OrderNo, OrderProductID));
+                }
+                else
+                {
+                    OrderRepository.AddOrderItems(AddOrderItems(Product, OrderNo));
+                }
+            }
+        }
+        public Boolean IsConfirmedOrderProductOthers(int Id)
+        {
+            return Id == 0;
+        }
+        public OrderItem AddOrderItems(EntityLibrary.OrderModels.OrderProductsInputModel OrderProducts,int OrderNo)
+        {
+            OrderItem = new OrderItem();
+            OrderItem.Quantity = OrderProducts.Quantity;
+            OrderItem.OrderProductID = OrderProducts.Id;
+            OrderItem.OrderId = OrderNo;
+            return OrderItem;
+        }
+        public OrderItem AddOrderItemsOtherProducts(EntityLibrary.OrderModels.OrderProductsInputModel OrderProducts, int OrderNo,int OrderProductID)
+        {
+            OrderItem = new OrderItem();
+            OrderItem.Quantity = OrderProducts.Quantity;
+            OrderItem.OrderProductID = OrderProductID;
+            OrderItem.OrderId = OrderNo;
+            return OrderItem;
+        }
+        public Order OrderConfirmation(int OrderNo)
+        {
+            return OrderRepository.OrderConfirmation(OrderNo);
+        }
+        #endregion
+
+
+
     }
 }

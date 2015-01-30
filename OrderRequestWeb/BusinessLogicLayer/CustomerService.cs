@@ -79,9 +79,10 @@ namespace BusinessLogicLayer
         public string LoggedInUser(SignInInputModel CustomerSignInInput)
         {
             Customer customer = CustomerRepository.CustomerLoggingIn(CustomerSignInInput);
-            return customer.FirstName;
+            return customer.FirstName+","+customer.Id.ToString();
         }
 
+       
        
        
     }

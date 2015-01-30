@@ -1,7 +1,8 @@
 ﻿@if (Request.IsAuthenticated)
 {
     <p>
-        <span>Hello, @Html.Encode(User.Identity.Name) !</span>
+        <span>Hello,  @Html.Encode(User.Identity.Name.Split(',')[0])
+ !</span>
         @Html.ActionLink("Sign out", "signout", "SignIn")
         
     </p>
