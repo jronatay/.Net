@@ -10,9 +10,9 @@ namespace EntityLibrary
     public class OrderRepository
     {
         private OrderRequestEntities db;
-        private OrderProduct OrderProduct;
-        private Order Order;
-        private OrderItem OrderItem;
+        private OrderProduct OrderProduct= new OrderProduct();
+        private Order Order = new Order();
+        private OrderItem OrderItem= new OrderItem();
          public OrderRepository(OrderRequestEntities db)
         {
             this.db = db;
@@ -65,7 +65,7 @@ namespace EntityLibrary
         public int AddOrderRequestAndReturnGeneratedID(int CustomerId)
         {
            
-            Order = new Order();
+          
             Order.CreationDate = DateTime.Now.ToUniversalTime();
             Order.CustomerId = CustomerId;
             db.Orders.Add(Order);
@@ -73,18 +73,24 @@ namespace EntityLibrary
             return Order.Id;
 
         }
+        public void UpdateOrderNo(int OrderID)
+        {
+            var result = db.Orders.Where(order => order.Id == OrderID).First();
+            result.OrderNo = OrderID;
+            db.SaveChanges();
+        }
 
         
 
         public int AddOtherProductAndReturnGeneratedID(OrderModels.OrderProductsInputModel OtherRequestProduct)
         {
-            OrderProduct = new OrderProduct();
+            
             AddOtherProduct(OtherRequestProduct);
             return OrderProduct.Id;
         }
         public void AddOtherProduct(OrderModels.OrderProductsInputModel OtherRequestProduct)
         {
-            OrderProduct = new OrderProduct();
+           
             OrderProduct = PopulateOrderProductByRequestProduct(OtherRequestProduct);
             db.OrderProducts.Add(OrderProduct);
             db.SaveChanges();
@@ -92,7 +98,7 @@ namespace EntityLibrary
 
         public OrderProduct PopulateOrderProductByRequestProduct(OrderModels.OrderProductsInputModel OtherRequestProduct)
         {
-            OrderProduct = new OrderProduct();
+            
             OrderProduct.ProductName = OtherRequestProduct.ProductName;
             OrderProduct.Description = OtherRequestProduct.Description;
             return OrderProduct;
@@ -100,8 +106,8 @@ namespace EntityLibrary
 
         public void AddOrderItems(OrderItem OrderItems)
         {
-            OrderItems = new OrderItem();
-            db.OrderItems.Add(OrderItems);
+            OrderItem = OrderItems;
+            db.OrderItems.Add(OrderItem);
             db.SaveChanges();
         }
         public Order OrderConfirmation(int OrderNo)

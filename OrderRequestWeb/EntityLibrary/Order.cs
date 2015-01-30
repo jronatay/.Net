@@ -20,7 +20,7 @@ namespace EntityLibrary
         }
     
         public int Id { get; set; }
-        public int OrderNo { get; set; }
+        public Nullable<int> OrderNo { get; set; }
         public int CustomerId { get; set; }
         public System.DateTime CreationDate { get; set; }
         public string Fullfilled { get; set; }

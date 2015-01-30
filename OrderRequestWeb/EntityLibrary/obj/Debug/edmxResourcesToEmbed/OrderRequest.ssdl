@@ -5,12 +5,20 @@
     <EntitySet Name="OrderItems" EntityType="OrderRequestModel.Store.OrderItems" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="OrderProducts" EntityType="OrderRequestModel.Store.OrderProducts" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Orders" EntityType="OrderRequestModel.Store.Orders" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="FK_OrderItems_OrderProducts" Association="OrderRequestModel.Store.FK_OrderItems_OrderProducts">
-      <End Role="OrderProducts" EntitySet="OrderProducts" />
+    <AssociationSet Name="FK_Customers_Customers" Association="OrderRequestModel.Store.FK_Customers_Customers">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Customers1" EntitySet="Customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customers_Customers1" Association="OrderRequestModel.Store.FK_Customers_Customers1">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Customers1" EntitySet="Customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderItems_OrderItems" Association="OrderRequestModel.Store.FK_OrderItems_OrderItems">
+      <End Role="Orders" EntitySet="Orders" />
       <End Role="OrderItems" EntitySet="OrderItems" />
     </AssociationSet>
-    <AssociationSet Name="FK_OrderItems_Orders" Association="OrderRequestModel.Store.FK_OrderItems_Orders">
-      <End Role="Orders" EntitySet="Orders" />
+    <AssociationSet Name="FK_OrderItems_OrderProducts" Association="OrderRequestModel.Store.FK_OrderItems_OrderProducts">
+      <End Role="OrderProducts" EntitySet="OrderProducts" />
       <End Role="OrderItems" EntitySet="OrderItems" />
     </AssociationSet>
     <AssociationSet Name="FK_Orders_Customers" Association="OrderRequestModel.Store.FK_Orders_Customers">
@@ -50,18 +58,54 @@
     </Key>
     <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProductName" Type="nvarchar" MaxLength="50" />
-    <Property Name="Description" Type="nvarchar" MaxLength="100" />
+    <Property Name="Description" Type="nvarchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="Orders">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
-    <Property Name="OrderNo" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="OrderNo" Type="int" StoreGeneratedPattern="None" />
     <Property Name="CustomerId" Type="int" Nullable="false" />
     <Property Name="CreationDate" Type="datetime" Nullable="false" />
     <Property Name="Fullfilled" Type="nvarchar" MaxLength="20" />
   </EntityType>
+  <Association Name="FK_Customers_Customers">
+    <End Role="Customers" Type="OrderRequestModel.Store.Customers" Multiplicity="1" />
+    <End Role="Customers1" Type="OrderRequestModel.Store.Customers" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Customers1">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customers_Customers1">
+    <End Role="Customers" Type="OrderRequestModel.Store.Customers" Multiplicity="1" />
+    <End Role="Customers1" Type="OrderRequestModel.Store.Customers" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Customers1">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderItems_OrderItems">
+    <End Role="Orders" Type="OrderRequestModel.Store.Orders" Multiplicity="1" />
+    <End Role="OrderItems" Type="OrderRequestModel.Store.OrderItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderItems">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_OrderItems_OrderProducts">
     <End Role="OrderProducts" Type="OrderRequestModel.Store.OrderProducts" Multiplicity="1" />
     <End Role="OrderItems" Type="OrderRequestModel.Store.OrderItems" Multiplicity="*" />
@@ -71,18 +115,6 @@
       </Principal>
       <Dependent Role="OrderItems">
         <PropertyRef Name="OrderProductID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_OrderItems_Orders">
-    <End Role="Orders" Type="OrderRequestModel.Store.Orders" Multiplicity="1" />
-    <End Role="OrderItems" Type="OrderRequestModel.Store.OrderItems" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Orders">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="OrderItems">
-        <PropertyRef Name="OrderId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

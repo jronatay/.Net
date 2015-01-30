@@ -131,8 +131,10 @@ namespace BusinessLogicLayer
         {
            
             int OrderNo = OrderRepository.AddOrderRequestAndReturnGeneratedID(CustomerID);
+            OrderRepository.UpdateOrderNo(OrderNo);
             return OrderNo;
         }
+
         #region OrderItems
         public void SaveOrder(EntityLibrary.OrderModels.OrderRequestInputModel ConfirmedOrderRequest,int OrderNo)
         {
@@ -141,12 +143,12 @@ namespace BusinessLogicLayer
             OrderInput = PopulatedOrderProductFromRequest(ConfirmedOrderRequest);
             foreach (var Product in OrderInput)
             {
-                if (IsConfirmedOrderProductOthers(Product.Id))
+                if (IsConfirmedOrderProductOthers(Product.Id)  && !IsConfirmedOrderProductOthersZeroQuantity(Product.Quantity))
                 {
                     int OrderProductID =OrderRepository.AddOtherProductAndReturnGeneratedID(Product);
                     OrderRepository.AddOrderItems(AddOrderItemsOtherProducts(Product, OrderNo, OrderProductID));
                 }
-                else
+                else if (!IsConfirmedOrderProductOthers(Product.Id) && !IsConfirmedOrderProductOthersZeroQuantity(Product.Quantity))
                 {
                     OrderRepository.AddOrderItems(AddOrderItems(Product, OrderNo));
                 }
@@ -155,6 +157,10 @@ namespace BusinessLogicLayer
         public Boolean IsConfirmedOrderProductOthers(int Id)
         {
             return Id == 0;
+        }
+        public Boolean IsConfirmedOrderProductOthersZeroQuantity(int Quantity)
+        {
+            return Quantity == 0;
         }
         public OrderItem AddOrderItems(EntityLibrary.OrderModels.OrderProductsInputModel OrderProducts,int OrderNo)
         {

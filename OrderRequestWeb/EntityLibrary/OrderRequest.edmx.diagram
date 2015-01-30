@@ -12,6 +12,8 @@
         <AssociationConnector Association="OrderRequestModel.FK_Orders_Customers" ManuallyRouted="false" />
         <AssociationConnector Association="OrderRequestModel.FK_OrderItems_OrderProducts" ManuallyRouted="false" />
         <AssociationConnector Association="OrderRequestModel.FK_OrderItems_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="OrderRequestModel.FK_Customers_Customers" />
+        <AssociationConnector Association="OrderRequestModel.FK_Customers_Customers1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

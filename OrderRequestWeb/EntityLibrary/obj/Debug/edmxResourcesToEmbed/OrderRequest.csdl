@@ -17,6 +17,14 @@
       <End Role="Orders" EntitySet="Orders" />
       <End Role="OrderItems" EntitySet="OrderItems" />
     </AssociationSet>
+    <AssociationSet Name="FK_Customers_Customers" Association="OrderRequestModel.FK_Customers_Customers">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Customer1" EntitySet="Customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customers_Customers1" Association="OrderRequestModel.FK_Customers_Customers1">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Customer1" EntitySet="Customers" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Customer">
     <Key>
@@ -53,15 +61,15 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
     <Property Name="ProductName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-    <Property Name="Description" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="OrderItems" Relationship="OrderRequestModel.FK_OrderItems_OrderProducts" FromRole="OrderProducts" ToRole="OrderItems" />
   </EntityType>
   <EntityType Name="Order">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" />
-    <Property Name="OrderNo" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderNo" Type="Int32" p1:StoreGeneratedPattern="None" />
     <Property Name="CustomerId" Type="Int32" Nullable="false" />
     <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="Fullfilled" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
@@ -101,6 +109,30 @@
       </Principal>
       <Dependent Role="OrderItems">
         <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customers_Customers">
+    <End Type="OrderRequestModel.Customer" Role="Customer" Multiplicity="1" />
+    <End Type="OrderRequestModel.Customer" Role="Customer1" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Customer1">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customers_Customers1">
+    <End Type="OrderRequestModel.Customer" Role="Customer" Multiplicity="1" />
+    <End Type="OrderRequestModel.Customer" Role="Customer1" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Customer1">
+        <PropertyRef Name="Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
