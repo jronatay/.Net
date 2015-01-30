@@ -1,4 +1,4 @@
-﻿@model List<EntityLibrary.OrderModels.OrderProductsInputModel>
+﻿@model IEnumerable<EntityLibrary.OrderModels.OrderProductsInputModel>
 
 @{
     ViewBag.Title = "OrderCheck";
@@ -6,24 +6,26 @@
 
 <h2>OrderCheck</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
+
+@using (Html.BeginForm("Index", "Order", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+    <table>
     <tr>
         <th>
-            Quantity
+            @Html.DisplayNameFor(model => model.Quantity)
         </th>
         <th>
-           Product Name
+            @Html.DisplayNameFor(model => model.ProductName)
         </th>
         <th>
-           Description
+            @Html.DisplayNameFor(model => model.Description)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Quantity)
@@ -34,12 +36,13 @@
         <td>
             @Html.DisplayFor(modelItem => item.Description)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
+            <input type="hidden" name="Id" value="@item.Id" />
+            <input type="hidden" name="ProductName" value="@item.ProductName" />
+            <input type="hidden" name="Description" value="@item.Description" />
+            <input type="hidden" step="1" name="Quantity" value="@item.Quantity" />
     </tr>
-}
+    }
+        <tr><td><input type="submit" value="Confirm Order" /></td></tr>
 
-</table>
+    </table>
+}

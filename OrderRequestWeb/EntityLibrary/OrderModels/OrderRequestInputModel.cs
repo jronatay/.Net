@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace EntityLibrary.OrderModels
 {
+    [Serializable]
     public class OrderRequestInputModel
     {
         public List<int> Id { get; set; }

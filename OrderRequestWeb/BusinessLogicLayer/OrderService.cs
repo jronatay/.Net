@@ -20,10 +20,29 @@ namespace BusinessLogicLayer
         {
             return OrderRepository.OrderProductInputList();
         }
+
         public List<EntityLibrary.OrderModels.OrderProductsInputModel> PopulatedOrderProductFromRequest(EntityLibrary.OrderModels.OrderRequestInputModel OrderRequestModel)
         {
-            return OrderRepository.PopulateModelFromRequest(OrderRequestModel);
+            return PopulateModelFromRequest(OrderRequestModel);
         }
+
+        public List<EntityLibrary.OrderModels.OrderProductsInputModel> PopulateModelFromRequest(EntityLibrary.OrderModels.OrderRequestInputModel OrderInputRequest)
+        {
+            List<EntityLibrary.OrderModels.OrderProductsInputModel> OrderProductsModel = new List<EntityLibrary.OrderModels.OrderProductsInputModel>();
+            for (int counter = 0; counter < OrderInputRequest.Id.Count(); counter++)
+            {
+                EntityLibrary.OrderModels.OrderProductsInputModel RequestedProduct = new EntityLibrary.OrderModels.OrderProductsInputModel();
+                RequestedProduct.Id = OrderInputRequest.Id[counter];
+                RequestedProduct.ProductName = OrderInputRequest.ProductName[counter];
+                RequestedProduct.Description = OrderInputRequest.Description[counter];
+                RequestedProduct.Quantity = OrderInputRequest.Quantity[counter];
+                OrderProductsModel.Add(RequestedProduct);
+
+            }
+            return OrderProductsModel;
+
+        }
+
         public Boolean ValidateOrderRequestedInputs(List<EntityLibrary.OrderModels.OrderProductsInputModel> OrderProductsInput)
         {
             return true;
@@ -45,10 +64,34 @@ namespace BusinessLogicLayer
         {
             if (IsThereAtleastOneOrder(OrderProductsInput))
             {
-                return OrderRepository.StoreProductsOnTemporaryStorage(OrderProductsInput);
+                return StoreProductsOnTemporaryStorage(OrderProductsInput);
             }
             return null;
         }
+
+        public List<EntityLibrary.OrderModels.OrderProductsInputModel> StoreProductsOnTemporaryStorage(List<EntityLibrary.OrderModels.OrderProductsInputModel> OrderProductsRequestedInput)
+        {
+            List<EntityLibrary.OrderModels.OrderProductsInputModel> OrderProductsTemporaryStorage = new List<EntityLibrary.OrderModels.OrderProductsInputModel>();
+            foreach (var Item in OrderProductsRequestedInput)
+            {
+                if (Item.Quantity > 0)
+                {
+                    OrderProductsTemporaryStorage.Add(PopulateTemporaryStorage(Item));
+                }
+            }
+            return OrderProductsTemporaryStorage;
+        }
+
+        public EntityLibrary.OrderModels.OrderProductsInputModel PopulateTemporaryStorage(EntityLibrary.OrderModels.OrderProductsInputModel OrderProductsRequestedInput)
+        {
+            EntityLibrary.OrderModels.OrderProductsInputModel OrderProductsInput = new EntityLibrary.OrderModels.OrderProductsInputModel();
+            OrderProductsInput.Id = OrderProductsRequestedInput.Id;
+            OrderProductsInput.ProductName = OrderProductsRequestedInput.ProductName;
+            OrderProductsInput.Description = OrderProductsRequestedInput.Description;
+            OrderProductsInput.Quantity = OrderProductsRequestedInput.Quantity;
+            return OrderProductsInput;
+        }
+
         public Boolean IsRequestedStoredInTemporaryStorage(List<EntityLibrary.OrderModels.OrderProductsInputModel> OrderProductsInput)
         {
             return ReturnStoredOrderProducts(OrderProductsInput) != null;

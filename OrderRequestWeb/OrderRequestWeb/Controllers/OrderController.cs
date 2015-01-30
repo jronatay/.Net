@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using EntityLibrary;
 using EntityLibrary.OrderModels;
 using BusinessLogicLayer;
+using System.Web.Routing;
 
 namespace OrderRequestWeb.Controllers
 {
@@ -27,8 +28,9 @@ namespace OrderRequestWeb.Controllers
                 
                 if (OrderService.IsRequestedStoredInTemporaryStorage(OrderService.PopulatedOrderProductFromRequest(model)))
                 {
-
-                    return RedirectToAction("OrderCheck",model);
+                    
+                    Session["model"] = model;
+                    return RedirectToAction("OrderCheck");
                 }
                 else
                 {
@@ -39,10 +41,10 @@ namespace OrderRequestWeb.Controllers
             return View(OrderService.OrderProductInputList());
         }
 
-        public ActionResult OrderCheck(EntityLibrary.OrderModels.OrderRequestInputModel model)
+        public ActionResult OrderCheck()
         {
-
-            return View(OrderService.ReturnOrderProductsStored(OrderService.PopulatedOrderProductFromRequest(model)));
+            
+            return View( OrderService.ReturnOrderProductsStored(OrderService.PopulatedOrderProductFromRequest((EntityLibrary.OrderModels.OrderRequestInputModel)Session["model"])));
         }
 
     }
